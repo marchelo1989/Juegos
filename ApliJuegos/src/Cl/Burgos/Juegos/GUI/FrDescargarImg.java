@@ -25,9 +25,12 @@ import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import java.util.StringTokenizer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -124,6 +127,11 @@ public class FrDescargarImg extends javax.swing.JFrame {
         jButton6 = new javax.swing.JButton();
         TotalPC = new javax.swing.JLabel();
         DescargaPC = new javax.swing.JLabel();
+        jButton7 = new javax.swing.JButton();
+        jButton8 = new javax.swing.JButton();
+        jButton9 = new javax.swing.JButton();
+        jButton10 = new javax.swing.JButton();
+        jButton11 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -225,6 +233,41 @@ public class FrDescargarImg extends javax.swing.JFrame {
         DescargaPC.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         DescargaPC.setText("Descargados");
 
+        jButton7.setText("Crear PDF PSX");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
+
+        jButton8.setText("Crear PDF PS2");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
+
+        jButton9.setText("Crear PDF PSP");
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
+            }
+        });
+
+        jButton10.setText("Crear PDF PS3");
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
+            }
+        });
+
+        jButton11.setText("Crear PDF PC");
+        jButton11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton11ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -275,7 +318,14 @@ public class FrDescargarImg extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addGap(24, 24, 24)
                                 .addComponent(DescargaPC)))
-                        .addGap(0, 75, Short.MAX_VALUE)))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton7)
+                            .addComponent(jButton8)
+                            .addComponent(jButton9)
+                            .addComponent(jButton10)
+                            .addComponent(jButton11))
+                        .addGap(0, 84, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -286,31 +336,36 @@ public class FrDescargarImg extends javax.swing.JFrame {
                     .addComponent(jLabel2)
                     .addComponent(jButton1)
                     .addComponent(TotalPSX)
-                    .addComponent(DescargaPSX))
+                    .addComponent(DescargaPSX)
+                    .addComponent(jButton7))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jButton2)
                     .addComponent(TotalPS2)
-                    .addComponent(DescargaPS2))
+                    .addComponent(DescargaPS2)
+                    .addComponent(jButton8))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(jButton3)
                     .addComponent(TotalPSP)
-                    .addComponent(DescargaPSP))
+                    .addComponent(DescargaPSP)
+                    .addComponent(jButton9))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(jButton4)
                     .addComponent(TotalPS3)
-                    .addComponent(DescargaPS3))
+                    .addComponent(DescargaPS3)
+                    .addComponent(jButton10))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(jButton6)
                     .addComponent(TotalPC)
-                    .addComponent(DescargaPC))
+                    .addComponent(DescargaPC)
+                    .addComponent(jButton11))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton5)
@@ -660,6 +715,46 @@ public class FrDescargarImg extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton6ActionPerformed
 
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        // TODO add your handling code here:
+        BarraProgreso(0, 0, cantPC, 10);
+        String url=ApliJuegos.Url;
+        String nombreArchivo="Juegos PSX";
+        new DAOPsx().CrearTablaPDFPSX(url,nombreArchivo);
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        // TODO add your handling code here:
+        BarraProgreso(0, 0, cantPC, 10);
+        String url=ApliJuegos.Url;
+        String nombreArchivo="Juegos PS2";
+        new DAOPs2().CrearTablaPDFPS2(url,nombreArchivo);
+    }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        // TODO add your handling code here:
+        BarraProgreso(0, 0, cantPC, 10);
+        String url=ApliJuegos.Url;
+        String nombreArchivo="Juegos PSP";
+        new DAOPsp().CrearTablaPDFPSP(url,nombreArchivo);
+    }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+        // TODO add your handling code here:
+        BarraProgreso(0, 0, cantPC, 10);
+        String url=ApliJuegos.Url;
+        String nombreArchivo="Juegos PS3";
+        new DAOPs3().CrearTablaPDFPS3(url,nombreArchivo);
+    }//GEN-LAST:event_jButton10ActionPerformed
+
+    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
+        // TODO add your handling code here:
+        BarraProgreso(0, 0, cantPC, 10);
+        String url=ApliJuegos.Url;
+        String nombreArchivo="Juegos PC";
+        new DAOPc().CrearTablaPDFPC(url,nombreArchivo);
+    }//GEN-LAST:event_jButton11ActionPerformed
+
     public void BarraProgreso(int inicio,int minimo,int maximo,int retraso){
         jProgressBar1.setValue(inicio);
         jProgressBar1.setMaximum(minimo);
@@ -720,11 +815,16 @@ public class FrDescargarImg extends javax.swing.JFrame {
     private javax.swing.JLabel TotalPSP;
     private javax.swing.JLabel TotalPSX;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton10;
+    private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
