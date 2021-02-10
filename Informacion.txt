@@ -1,0 +1,2 @@
+-ApliJuegos
+	v1.0 implementación de clases para el funcionamiento
