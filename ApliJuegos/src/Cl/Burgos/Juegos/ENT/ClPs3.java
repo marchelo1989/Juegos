@@ -156,5 +156,5 @@ public class ClPs3 {
         this.codigo = codigo;
         this.nombre = nombre;
     }
-    
+
 }

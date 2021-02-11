@@ -8,7 +8,6 @@ package Cl.Burgos.Juegos.GUI;
 import Cl.Burgos.Juegos.DAO.DAOPs3;
 import Cl.Burgos.Juegos.ENT.ClPs3;
 import Cl.Burgos.Juegos.FUN.Archivos;
-import Cl.Burgos.Juegos.FUN.HiloPasos;
 import Cl.Burgos.Juegos.FUN.Render;
 import Cl.Burgos.Juegos.Main.ApliJuegos;
 import java.awt.Image;
@@ -18,6 +17,8 @@ import java.awt.image.RenderedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.StringTokenizer;
 import javax.imageio.ImageIO;
@@ -38,23 +39,15 @@ public class FrPs3 extends javax.swing.JFrame {
 
     Archivos archivos = new Archivos();
     DAOPs3 dAOPs3 = new DAOPs3();
-    int id,cantPS3;
-    String url = ApliJuegos.Url+"\\IMG\\";
+    int id;
+    
     /**
      * Creates new form FrPs3
      */
     public FrPs3() {
         initComponents();
-
-        cantPS3=dAOPs3.CuantosTotal();
-        TotalPS3.setText("Total "+cantPS3);
         Limpiar();
-
-        jtAHelp.setText("1.- Para descargar las imágenes de la BD y poder \n" +
-                "visualizarlas más rápido en el menú de datos \n "
-                + "2.- Crear un archivo PDF sobre la información  De los juegos en la BD \n "
-                + "3.- Crear un archivo Excel sobre la información De los juegos en la BD ");
-        jtAHelp.setEditable(false);
+        
         jPanel1.setOpaque(false);
         jPanel2.setOpaque(false);
         jPanel3.setOpaque(false);
@@ -172,7 +165,7 @@ public class FrPs3 extends javax.swing.JFrame {
         jTable1.setDefaultRenderer(Object.class, new Render());
 
         //LE AGREGAMOS EL TITULO DE LAS COLUMNAS DE LA TABLA EN UN ARREGLO
-        String strTitulos[] = {"ID", "CODIGO", "NOMBRE", "REGION", "IDIOMAS", "PLEYER", "DISCO", "UPDATE", "DLC", "IMAGEN"};
+        String strTitulos[] = {"ID", "CODIGO", "NOMBRE", "REGION", "IDIOMAS", "PLAYER", "DISCO", "UPDATE", "DLC", "IMAGEN"};
 
         //LE ASIGNAMOS LAS COLUMNAS AL MODELO CON LA CADENA DE ARRIBA
         tablaClientes.setColumnIdentifiers(strTitulos);
@@ -243,7 +236,7 @@ public class FrPs3 extends javax.swing.JFrame {
         jTable1.setDefaultRenderer(Object.class, new Render());
         
         //LE AGREGAMOS EL TITULO DE LAS COLUMNAS DE LA TABLA EN UN ARREGLO
-        String strTitulos[]={"ID","CODIGO","NOMBRE","REGION","IDIOMAS","PLEYER","DISCO", "UPDATE", "DLC", "IMAGEN"};
+        String strTitulos[]={"ID","CODIGO","NOMBRE","REGION","IDIOMAS","PLAYER","DISCO", "UPDATE", "DLC", "IMAGEN"};
         
         //LE ASIGNAMOS LAS COLUMNAS AL MODELO CON LA CADENA DE ARRIBA
         tablaClientes.setColumnIdentifiers(strTitulos);
@@ -308,7 +301,6 @@ public class FrPs3 extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jTabbedPane3 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         txtCodigo = new javax.swing.JTextField();
@@ -341,16 +333,6 @@ public class FrPs3 extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jrbDlcSi = new javax.swing.JRadioButton();
         jrbDlcNo = new javax.swing.JRadioButton();
-        jPanel4 = new javax.swing.JPanel();
-        jLabel9 = new javax.swing.JLabel();
-        jButton5 = new javax.swing.JButton();
-        TotalPS3 = new javax.swing.JLabel();
-        DescargaPS3 = new javax.swing.JLabel();
-        jButton10 = new javax.swing.JButton();
-        jProgressBar1 = new javax.swing.JProgressBar();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        jtAHelp = new javax.swing.JTextArea();
-        jButton6 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -384,7 +366,7 @@ public class FrPs3 extends javax.swing.JFrame {
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
         );
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos"));
@@ -657,109 +639,25 @@ public class FrPs3 extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jTabbedPane3.addTab("Datos", jPanel1);
-
-        jLabel9.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel9.setText("Imagenes de PS3:");
-
-        jButton5.setText("Descargar");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
-            }
-        });
-
-        TotalPS3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        TotalPS3.setText("Total ");
-
-        DescargaPS3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        DescargaPS3.setText("Descargados");
-
-        jButton10.setText("Crear PDF PS3");
-        jButton10.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton10ActionPerformed(evt);
-            }
-        });
-
-        jProgressBar1.setStringPainted(true);
-
-        jtAHelp.setColumns(20);
-        jtAHelp.setRows(5);
-        jScrollPane3.setViewportView(jtAHelp);
-
-        jButton6.setText("Crear Excel PS3");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton10)
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addComponent(jLabel9)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton5)
-                                .addGap(18, 18, 18)
-                                .addComponent(TotalPS3)
-                                .addGap(18, 18, 18)
-                                .addComponent(DescargaPS3))
-                            .addComponent(jButton6))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 102, Short.MAX_VALUE)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 413, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel9)
-                            .addComponent(jButton5)
-                            .addComponent(TotalPS3)
-                            .addComponent(DescargaPS3))
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton10)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton6)
-                        .addGap(0, 67, Short.MAX_VALUE))
-                    .addComponent(jScrollPane3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-
-        jTabbedPane3.addTab("Archivos", jPanel4);
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jTabbedPane3)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 5, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -933,53 +831,12 @@ public class FrPs3 extends javax.swing.JFrame {
         defineTablaPs3Buscar(clPs3);
     }//GEN-LAST:event_jButton4ActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
-        BarraProgreso(0, 0, cantPS3, 10);
-        DAOPs3 dAOPs3 = new DAOPs3();
-        String nombre = null;
-        Image img = null;
-        int numPS3=0;
-        try {
-            List<ClPs3> datosCliente = dAOPs3.leerPs3();
-
-            for (int i = 0; i < datosCliente.size(); i++) {
-                //                id = Integer.parseInt(String.valueOf(datosCliente.get(i).getId()));
-                //                nombre=datosCliente.get(i).getCodigo()+"-"+datosCliente.get(i).getNombre()+".png";
-                numPS3=i;
-                nombre = datosCliente.get(i).getCodigo() + ".jpg";
-                byte[] bi = datosCliente.get(i).getImagen();
-                BufferedImage image = null;
-                InputStream in = new ByteArrayInputStream(bi);
-                image = ImageIO.read(in);
-                img = image;
-                String aux = nombre;
-                StringTokenizer token = new StringTokenizer(aux, ".");
-                token.nextToken();
-                String formato = token.nextToken();
-                ImageIO.write((RenderedImage) img, formato, new File(url+"PS3" + "\\" + nombre));
-                }
-                DescargaPS3.setText("Descargados "+Integer.toString(numPS3+1));
-                JOptionPane.showMessageDialog(null, "Total De Juegos PS3 descargados "+Integer.toString(numPS3+1));
-            } catch (Exception ex) {
-                System.out.println(ex.getMessage());
-                //                Logger.getLogger(FrHome.class.getName()).log(Level.SEVERE, null, ex);
-            }
-    }//GEN-LAST:event_jButton5ActionPerformed
-
-    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
-        // TODO add your handling code here:
-        BarraProgreso(0, 0, cantPS3, 10);
-        String url=ApliJuegos.Url;
-        String nombreArchivo="Juegos PS3";
-        new DAOPs3().CrearTablaPDFPS3(url,nombreArchivo);
-    }//GEN-LAST:event_jButton10ActionPerformed
-
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
-        JOptionPane.showMessageDialog(null, "Sin Terminar");
-    }//GEN-LAST:event_jButton6ActionPerformed
-
+    public String siyno(boolean b){
+        String rep="";
+        if(b==true){ rep="Si";}
+        if(b==false){ rep="No";}
+        return rep;
+    }
     public void cargarDatosCap(String ram) {
         if (ram.equals("MB")) {
             jcCapasidad.setSelectedIndex(0);
@@ -1021,17 +878,6 @@ public class FrPs3 extends javax.swing.JFrame {
             jrbDlcNo.setSelected(true);
         }
     }
-    public void BarraProgreso(int inicio,int minimo,int maximo,int retraso){
-        jProgressBar1.setValue(inicio);
-        jProgressBar1.setMaximum(minimo);
-        jProgressBar1.setMaximum(maximo);
-        HiloPasos.retraso=retraso;
-        System.out.println("Retraso "+HiloPasos.retraso);
-        System.out.println("Maximo "+jProgressBar1.getMaximum());
-        System.out.println("Mimino "+jProgressBar1.getMinimum());
-        Thread hilo1 = new HiloPasos(jProgressBar1);
-        hilo1.start();
-    }
     /**
      * @param args the command line arguments
      */
@@ -1068,8 +914,6 @@ public class FrPs3 extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel DescargaPS3;
-    private javax.swing.JLabel TotalPS3;
     private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnDescarImg;
@@ -1077,12 +921,9 @@ public class FrPs3 extends javax.swing.JFrame {
     private javax.swing.ButtonGroup buttonGroupDLC;
     private javax.swing.ButtonGroup buttonGroupUpdate;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1092,15 +933,10 @@ public class FrPs3 extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTabbedPane jTabbedPane3;
     private javax.swing.JTable jTable1;
     private javax.swing.JComboBox<String> jcCapasidad;
     private javax.swing.JComboBox<String> jcRegion;
@@ -1109,7 +945,6 @@ public class FrPs3 extends javax.swing.JFrame {
     private javax.swing.JRadioButton jrbUpNo;
     private javax.swing.JRadioButton jrbUpSi;
     private javax.swing.JSpinner jsJugadores;
-    private javax.swing.JTextArea jtAHelp;
     private javax.swing.JLabel lblImgen;
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtDisco;

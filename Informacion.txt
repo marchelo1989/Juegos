@@ -5,4 +5,5 @@
 	v1.3 Se le agrego el sistema operativo Windows 2000 a los registros de pc
 	v1.4 Se ha corregido el problema de visualización de la capacidad de video, disco, procesador y RAM
 	v1.5 se ha implementado los campos Update y DLC a la interfaz de PS3 y se a cambiado el campo region para mejor manejo
-	v1.6 cambio de la interfaz de archivos a una pestaña de la misma interfaz 
+	v1.6 cambio de la interfaz de archivos a una pestaña de la misma interfaz cambios en la creación de PDF orden del código de creación de directorios
+	v1.7 Eliminación de la ventana de archivo en la interfaz de PS3 implementación del código de log para registro de errores 
