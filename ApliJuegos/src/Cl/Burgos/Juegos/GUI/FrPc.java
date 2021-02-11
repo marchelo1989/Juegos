@@ -84,6 +84,7 @@ public class FrPc extends javax.swing.JFrame {
         jRadioButton7.setSelected(false);
         jRadioButton8.setSelected(false);
         jRadioButton9.setSelected(false);
+        jRadioButton10.setSelected(false);
         txtRam.setText("");
         jcCapaRam.setSelectedIndex(0);
         txtVideo.setText("");
@@ -274,17 +275,18 @@ public class FrPc extends javax.swing.JFrame {
     
     public String Windows(){
         String resp;
-        String siste95="",siste98="",sisteNT="",sisteME="",sisteXP="",sisteVista="",siste7="",siste8="",siste10="";
+        String siste95="",siste98="",sisteNT="",sisteME="",siste2000="",sisteXP="",sisteVista="",siste7="",siste8="",siste10="";
         if(jRadioButton1.isSelected()){ siste95="95 "; }
         if(jRadioButton2.isSelected()){ siste98="98 "; }
         if(jRadioButton3.isSelected()){ sisteNT="NT "; }
         if(jRadioButton4.isSelected()){ sisteME="ME "; }
+        if(jRadioButton10.isSelected()){ sisteME="2000 "; }
         if(jRadioButton5.isSelected()){ sisteXP="XP "; }
         if(jRadioButton6.isSelected()){ sisteVista="Vista "; }
         if(jRadioButton7.isSelected()){ siste7="7 "; }
         if(jRadioButton8.isSelected()){ siste8="8 "; }
         if(jRadioButton9.isSelected()){ siste10="10 "; }
-        resp = siste95+""+siste98+""+sisteNT+""+sisteME+""+sisteXP+""+sisteVista+""+siste7+""+siste8+""+siste10;
+        resp = siste95+""+siste98+""+sisteNT+""+sisteME+""+siste2000+""+sisteXP+""+sisteVista+""+siste7+""+siste8+""+siste10;
         return resp;
     }
     public ClPc insert(){
@@ -389,6 +391,7 @@ public class FrPc extends javax.swing.JFrame {
         jcCapaProse = new javax.swing.JComboBox<>();
         jPanel4 = new javax.swing.JPanel();
         lblImgen = new javax.swing.JLabel();
+        jRadioButton10 = new javax.swing.JRadioButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -585,6 +588,8 @@ public class FrPc extends javax.swing.JFrame {
             .addComponent(lblImgen, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
+        jRadioButton10.setText("2000");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -625,6 +630,8 @@ public class FrPc extends javax.swing.JFrame {
                                 .addComponent(jRadioButton3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jRadioButton4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jRadioButton10)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jRadioButton5)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -691,7 +698,8 @@ public class FrPc extends javax.swing.JFrame {
                             .addComponent(jRadioButton9)
                             .addComponent(jLabel14)
                             .addComponent(txtRam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jcCapaRam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jcCapaRam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jRadioButton10))
                         .addGap(1, 1, 1)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel15)
@@ -944,6 +952,7 @@ public class FrPc extends javax.swing.JFrame {
             if(parts[i].equals("98")){ jRadioButton2.setSelected(true); }
             if(parts[i].equals("NT")){ jRadioButton3.setSelected(true); }
             if(parts[i].equals("ME")){ jRadioButton4.setSelected(true); }
+            if(parts[i].equals("2000")){ jRadioButton10.setSelected(true); }
             if(parts[i].equals("XP")){ jRadioButton5.setSelected(true); }
             if(parts[i].equals("Vista")){ jRadioButton6.setSelected(true); }
             if(parts[i].equals("7")){ jRadioButton7.setSelected(true); }
@@ -1018,6 +1027,7 @@ public class FrPc extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JRadioButton jRadioButton1;
+    private javax.swing.JRadioButton jRadioButton10;
     private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JRadioButton jRadioButton3;
     private javax.swing.JRadioButton jRadioButton4;
