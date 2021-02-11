@@ -25,28 +25,18 @@ public class ApliJuegos {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        int resp = JOptionPane.showConfirmDialog(null, "¿Decea descargar imágenes? ", "Alerta!", JOptionPane.YES_NO_OPTION);
-        if(resp==0){
-            //Para Seleccionar el Directorio
-            //Url=Directorio.selecDirectrorio();
-            //Directorio predeterminado
-//            Url="..//ApliJuegos";
-            Directorio.Url= Url;
-            Directorio.crearDirecPre();
-            Directorio.crearDirecPSX();
-            Directorio.crearDirecPS2();
-            Directorio.crearDirecPSP();
-            Directorio.crearDirecPS3();
-            Directorio.crearDirecPC();
-            FrDescargarImg frDescargarImg = new FrDescargarImg();
-            frDescargarImg.setVisible(true);
-        }else if(resp==1){
+//        int resp = JOptionPane.showConfirmDialog(null, "¿Decea descargar imágenes? ", "Alerta!", JOptionPane.YES_NO_OPTION);
+//        if(resp==0){
+            Directorio.crearDirec();
+//            FrDescargarImg frDescargarImg = new FrDescargarImg();
+//            frDescargarImg.setVisible(true);
+//        }else if(resp==1){
             if(buscarUpdate()==false){
                 new FrHome().setVisible(true);
             }
-        }else{
-            System.exit(0);
-        }
+//        }else{
+//            System.exit(0);
+//        }
         
 //        DescargarImg();
     }

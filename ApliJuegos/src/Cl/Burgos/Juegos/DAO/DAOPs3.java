@@ -276,7 +276,7 @@ public class DAOPs3 {
             parrafo1.setFontSize(12f);
             
             // Creamos unas tablas
-            float[] anchos = {10f, 50f, 50f, 50f, 50f, 50f, 60f};
+            float[] anchos = {10f, 50f, 50f, 50f, 50f, 50f, 50f, 50f, 60f};
             Table tabla1 = new Table(anchos);
             Table tabla2 = new Table(anchos);
             
@@ -288,6 +288,8 @@ public class DAOPs3 {
             tabla1.addCell("Idioma");
             tabla1.addCell("Player");
             tabla1.addCell("Disco");
+            tabla1.addCell("Update");
+            tabla1.addCell("DLC");
             tabla1.addCell("Imagen");
             List<ClPs3> lista=new DAOPs3().leerPs3();
             for (int i = 0; i < lista.size(); i++) {
@@ -298,6 +300,8 @@ public class DAOPs3 {
                 tabla1.addCell(lista.get(i).getIdiomas());
                 tabla1.addCell(Integer.toString(lista.get(i).getJugadores()));
                 tabla1.addCell(lista.get(i).getDisco());
+                tabla1.addCell(siyno(lista.get(i).isUpdate()));
+                tabla1.addCell(siyno(lista.get(i).isDlc()));
                 Image img = new Image(ImageDataFactory.create(lista.get(i).getImagen()));
                 img.scaleToFit(60, 60);
                 tabla1.addCell(img);
@@ -328,5 +332,11 @@ public class DAOPs3 {
             }
                 
             }
+    }
+    public String siyno(boolean b){
+        String rep="";
+        if(b==true){ rep="Si";}
+        if(b==false){ rep="No";}
+        return rep;
     }
 }

@@ -5,6 +5,7 @@
  */
 package Cl.Burgos.Juegos.FUN;
 
+import Cl.Burgos.Juegos.Main.ApliJuegos;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
@@ -26,7 +27,7 @@ public class Directorio {
     static String userDir = System.getProperty("user.home");
     
 //    static String Url = "F:\\";
-    public static String Url;
+    static String Url=ApliJuegos.Url;
     static String carpeta1 = "IMG";
     static String carpeta2 = "PSX";
     static String carpeta3 = "PS2";
@@ -47,6 +48,24 @@ public class Directorio {
     public static void abrirArchivo(String url) throws IOException{
         File objetofile = new File (url);
         Desktop.getDesktop().open(objetofile);
+    }
+    public static void crearDirec(){
+        crearDirec(Url,carpeta1);
+        crearDirec(Url+"/"+carpeta1, carpeta2);
+        crearDirec(Url+"/"+carpeta1, carpeta3);
+        crearDirec(Url+"/"+carpeta1, carpeta4);
+        crearDirec(Url+"/"+carpeta1, carpeta5);
+        crearDirec(Url+"/"+carpeta1, carpeta6);
+    }
+    public static void crearDirec(String url,String carpeta){
+        File directorio = new File(url +"/"+ carpeta );
+        if (!directorio.exists()) {
+            if (directorio.mkdirs()) {
+                System.out.println("Directorio creado");
+            } else {
+                System.out.println("Error al crear directorio");
+            }
+        }
     }
     public static void crearDirecPre(){
         if(SO.startsWith("Windows")){
