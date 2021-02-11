@@ -39,7 +39,7 @@ import javax.swing.JOptionPane;
 public class DAOPs3 {
     public boolean sqlInsert(ClPs3 ps3) {
         Connection con = BD.getInstance().conectar();
-        String insert = "insert into ps3(codigo,nombre,region,lenguaje,jugadores,disco,imagen) values (?,?,?,?,?,?,?)";
+        String insert = "insert into ps3(codigo,nombre,region,lenguaje,jugadores,disco,update,dlc,imagen) values (?,?,?,?,?,?,?,?,?)";
         FileInputStream fi = null;
         PreparedStatement ps = null;
         try{
@@ -53,7 +53,9 @@ public class DAOPs3 {
             ps.setString(4, ps3.getIdiomas());
             ps.setInt(5, ps3.getJugadores());
             ps.setString(6, ps3.getDisco());
-            ps.setBinaryStream(7, fi);
+            ps.setBoolean(7, ps3.isUpdate());
+            ps.setBoolean(8, ps3.isDlc());
+            ps.setBinaryStream(9, fi);
             
             ps.execute();
             return true;
@@ -65,8 +67,8 @@ public class DAOPs3 {
     
     public boolean sqlUpdate(ClPs3 clPs3){	
         Connection con = BD.getInstance().conectar();
-        String insert = "update ps3 set codigo=?, nombre=?, region=?, lenguaje=?, jugadores=?, disco=?, imagen=? where IdPs3=?;";
-        String insert2 = "update ps3 set codigo=?, nombre=?, region=?, lenguaje=?, jugadores=?, disco=? where IdPs3=?;";
+        String insert = "update ps3 set codigo=?, nombre=?, region=?, lenguaje=?, jugadores=?, disco=?,update=?, dlc=?, imagen=? where IdPs3=?;";
+        String insert2 = "update ps3 set codigo=?, nombre=?, region=?, lenguaje=?, jugadores=?, disco=?, update=?, dlc=? where IdPs3=?;";
         FileInputStream fi = null;
         PreparedStatement ps = null;
         try{
@@ -81,8 +83,10 @@ public class DAOPs3 {
                 ps.setString(4, clPs3.getIdiomas());
                 ps.setInt(5, clPs3.getJugadores());
                 ps.setString(6, clPs3.getDisco());
-                ps.setBinaryStream(7, fi);
-                ps.setInt(8, clPs3.getId());
+                ps.setBoolean(7, clPs3.isUpdate());
+                ps.setBoolean(8, clPs3.isDlc());
+                ps.setBinaryStream(9, fi);
+                ps.setInt(10, clPs3.getId());
             }else{
                 ps = con.prepareStatement(insert2);
                 ps.setString(1, clPs3.getCodigo());
@@ -91,7 +95,9 @@ public class DAOPs3 {
                 ps.setString(4, clPs3.getIdiomas());
                 ps.setInt(5, clPs3.getJugadores());
                 ps.setString(6, clPs3.getDisco());
-                ps.setInt(7, clPs3.getId());
+                ps.setBoolean(7, clPs3.isUpdate());
+                ps.setBoolean(8, clPs3.isDlc());
+                ps.setInt(9, clPs3.getId());
             }
             
             ps.executeUpdate();
@@ -124,14 +130,15 @@ public class DAOPs3 {
         List<ClPs3> lista=new ArrayList<>();
         String strConsulta;
         
-        strConsulta="select IdPs3,codigo,nombre,region,lenguaje,jugadores,disco,imagen from ps3 order by nombre asc;";
+        strConsulta="select IdPs3,codigo,nombre,region,lenguaje,jugadores,disco,update,dlc,imagen from ps3 order by nombre asc;";
         
         try{
          ResultSet rs=BD.getInstance().sqlSelect(strConsulta);
          if(rs==null)return null;
          while(rs.next()){
              ClPs3 c = new ClPs3(rs.getInt("IdPs3"), rs.getString("codigo"), rs.getString("nombre"), 
-                     rs.getString("region"), rs.getString("lenguaje"), rs.getInt("jugadores"), rs.getString("disco"), rs.getBytes("imagen"));
+                     rs.getString("region"), rs.getString("lenguaje"), rs.getInt("jugadores"), rs.getString("disco"), 
+                     rs.getBoolean("update"), rs.getBoolean("dlc"),rs.getBytes("imagen"));
               lista.add(c);
          }
          
@@ -159,7 +166,7 @@ public class DAOPs3 {
         if(clPs3.getCodigo().length()>1 && clPs3.getNombre().length()>1){
             resp="codigo='"+clPs3.getCodigo()+"' and nombre like '%"+clPs3.getNombre()+"%'";
         }
-        strConsulta="select IdPs3,codigo,nombre,region,lenguaje,jugadores,disco,imagen from ps3 where "+resp+" order by nombre asc";
+        strConsulta="select IdPs3,codigo,nombre,region,lenguaje,jugadores,disco,update,dlc,imagen from ps3 where "+resp+" order by nombre asc";
         
         try{
          ResultSet rs=BD.getInstance().sqlSelect(strConsulta);
@@ -167,7 +174,8 @@ public class DAOPs3 {
          while(rs.next()){
              System.out.println(rs.getString("nombre"));
              ClPs3 c = new ClPs3(rs.getInt("IdPs3"), rs.getString("codigo"), rs.getString("nombre"), 
-                     rs.getString("region"), rs.getString("lenguaje"), rs.getInt("jugadores"), rs.getString("disco"), rs.getBytes("imagen"));
+                     rs.getString("region"), rs.getString("lenguaje"), rs.getInt("jugadores"), rs.getString("disco"),
+                     rs.getBoolean("update"), rs.getBoolean("dlc"),rs.getBytes("imagen"));
               lista.add(c);
          }
          
@@ -185,14 +193,15 @@ public class DAOPs3 {
         List<ClPs3> lista=new ArrayList<>();
         String strConsulta;
         
-        strConsulta="select IdPs3,codigo,nombre,region,lenguaje,jugadores,disco,imagen from ps3 where IdPs3="+clPs3.getId();
+        strConsulta="select IdPs3,codigo,nombre,region,lenguaje,jugadores,disco,update,dlc,imagen from ps3 where IdPs3="+clPs3.getId();
         
         try{
          ResultSet rs=BD.getInstance().sqlSelect(strConsulta);
          if(rs==null)return null;
          while(rs.next()){
              ClPs3 c = new ClPs3(rs.getInt("IdPs3"), rs.getString("codigo"), rs.getString("nombre"), 
-                     rs.getString("region"), rs.getString("lenguaje"), rs.getInt("jugadores"), rs.getString("disco"), rs.getBytes("imagen"));
+                     rs.getString("region"), rs.getString("lenguaje"), rs.getInt("jugadores"), rs.getString("disco"), 
+                     rs.getBoolean("update"), rs.getBoolean("dlc"),rs.getBytes("imagen"));
               lista.add(c);
          }
          

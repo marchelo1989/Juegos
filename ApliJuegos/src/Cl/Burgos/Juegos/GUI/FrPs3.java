@@ -68,11 +68,13 @@ public class FrPs3 extends javax.swing.JFrame {
         id = 0;
         txtCodigo.setText("");
         txtNombre.setText("");
-        txtRegion.setText("");
+        jcRegion.setSelectedIndex(0);
         txtIdiomas.setText("");
         jcCapasidad.setSelectedIndex(0);
         txtDisco.setText("");
         jsJugadores.setValue(1);
+        buttonGroupUpdate.clearSelection();
+        buttonGroupDLC.clearSelection();
         txtRuta.setText("");
         lblImgen.setText("");
         lblImgen.setIcon(null);
@@ -108,7 +110,10 @@ public class FrPs3 extends javax.swing.JFrame {
     }
     
     public ClPs3 insert() {
+        String region = jcRegion.getSelectedItem().toString();
         String capasid = jcCapasidad.getSelectedItem().toString();
+        boolean update = jrbUpSi.isSelected();
+        boolean dlc = jrbDlcSi.isSelected();
         ClPs3 clPs3 = null;
         String codi = txtCodigo.getText();
         if(codi.length()==0){
@@ -116,22 +121,25 @@ public class FrPs3 extends javax.swing.JFrame {
         }
         if (txtRuta.getText().length() > 0) {
             archivos.CopiarArchivos(txtRuta.getText(), System.getProperties().getProperty("user.dir")+"/IMG/PS3/"+codi.trim()+".jpg");
-            clPs3 = new ClPs3(codi.trim(), txtNombre.getText().trim(), txtRegion.getText().trim(), txtIdiomas.getText().trim(), jsJugadores.getValue().hashCode(), txtDisco.getText().trim() + " " + capasid, txtRuta.getText());
+            clPs3 = new ClPs3(codi.trim(), txtNombre.getText().trim(), region, txtIdiomas.getText().trim(), jsJugadores.getValue().hashCode(), txtDisco.getText().trim() + " " + capasid, update, dlc, txtRuta.getText());
         } else {
             String ruta = "./src/Cl/Burgos/Juegos/IMG/PS3.png";
-            clPs3 = new ClPs3(codi.trim(), txtNombre.getText().trim(), txtRegion.getText().trim(), txtIdiomas.getText().trim(), jsJugadores.getValue().hashCode(), txtDisco.getText().trim() + " " + capasid, ruta);
+            clPs3 = new ClPs3(codi.trim(), txtNombre.getText().trim(), region, txtIdiomas.getText().trim(), jsJugadores.getValue().hashCode(), txtDisco.getText().trim() + " " + capasid, update, dlc, ruta);
         }
         return clPs3;
     }
 
     public ClPs3 actualizar() {
+        String region = jcRegion.getSelectedItem().toString();
         String capasid = jcCapasidad.getSelectedItem().toString();
+        boolean update = jrbUpSi.isSelected();
+        boolean dlc = jrbDlcSi.isSelected();
         ClPs3 clPs2= null;
         if(txtRuta.getText().length()>0){
             archivos.CopiarArchivos(txtRuta.getText(), System.getProperties().getProperty("user.dir")+"/IMG/PS3/"+txtCodigo.getText().trim()+".jpg");
-            clPs2 = new ClPs3(id, txtCodigo.getText().trim(), txtNombre.getText().trim(), txtRegion.getText().trim(), txtIdiomas.getText().trim(), jsJugadores.getValue().hashCode(), txtDisco.getText().trim() + " " + capasid, txtRuta.getText());
+            clPs2 = new ClPs3(id, txtCodigo.getText().trim(), txtNombre.getText().trim(), region, txtIdiomas.getText().trim(), jsJugadores.getValue().hashCode(), txtDisco.getText().trim() + " " + capasid, update, dlc, txtRuta.getText());
         }else{
-            clPs2 = new ClPs3(id, txtCodigo.getText().trim(), txtNombre.getText().trim(), txtRegion.getText().trim(), txtIdiomas.getText().trim(), jsJugadores.getValue().hashCode(), txtDisco.getText().trim() + " " + capasid, txtRuta.getText());
+            clPs2 = new ClPs3(id, txtCodigo.getText().trim(), txtNombre.getText().trim(), region, txtIdiomas.getText().trim(), jsJugadores.getValue().hashCode(), txtDisco.getText().trim() + " " + capasid, update, dlc, txtRuta.getText());
         }
         return clPs2;
     }
@@ -155,7 +163,7 @@ public class FrPs3 extends javax.swing.JFrame {
         jTable1.setDefaultRenderer(Object.class, new Render());
 
         //LE AGREGAMOS EL TITULO DE LAS COLUMNAS DE LA TABLA EN UN ARREGLO
-        String strTitulos[] = {"ID", "CODIGO", "NOMBRE", "REGION", "IDIOMAS", "PLEYER", "DISCO", "IMAGEN"};
+        String strTitulos[] = {"ID", "CODIGO", "NOMBRE", "REGION", "IDIOMAS", "PLEYER", "DISCO", "UPDATE", "DLC", "IMAGEN"};
 
         //LE ASIGNAMOS LAS COLUMNAS AL MODELO CON LA CADENA DE ARRIBA
         tablaClientes.setColumnIdentifiers(strTitulos);
@@ -173,7 +181,7 @@ public class FrPs3 extends javax.swing.JFrame {
         //LEEMOS LA CLASE CLIENTE MANDANDOLE LOS PARAMETROS
         //dAOClaves.leerClientesId(lngDesdeRegistro, (Long.valueOf(this.txtNumReg.getText())),tablaClientes,strBusqueda,idCliente);
         List<ClPs3> lista = dAOPs3.leerPs3();
-        Object fila[] = new Object[8];
+        Object fila[] = new Object[10];
 //        String datos[]=new String [3];
         for (int i = 0; i < lista.size(); i++) {
             fila[0] = Integer.toString(lista.get(i).getId());
@@ -183,6 +191,8 @@ public class FrPs3 extends javax.swing.JFrame {
             fila[4] = lista.get(i).getIdiomas();
             fila[5] = lista.get(i).getJugadores();
             fila[6] = lista.get(i).getDisco();
+            fila[7] = lista.get(i).isUpdate();
+            fila[8] = lista.get(i).isDlc();
             try {
                 String urlImagen = System.getProperties().getProperty("user.dir")+"/IMG/PS3/"+lista.get(i).getCodigo()+".jpg";
                 ImageIcon icon = new ImageIcon(urlImagen);
@@ -191,10 +201,10 @@ public class FrPs3 extends javax.swing.JFrame {
 //                BufferedImage image = null;
 //                image = ImageIO.read(new ByteArrayInputStream(bi));
 //                ImageIcon imgi = new ImageIcon(image.getScaledInstance(120, 60, 0));
-                fila[7] = new JLabel(imgi);
+                fila[9] = new JLabel(imgi);
 
             } catch (Exception ex) {
-                fila[7] = new JLabel("No imagen");
+                fila[9] = new JLabel("No imagen");
             }
             tablaClientes.addRow(fila);
         }
@@ -246,7 +256,7 @@ public class FrPs3 extends javax.swing.JFrame {
         //LEEMOS LA CLASE CLIENTE MANDANDOLE LOS PARAMETROS
         //dAOClaves.leerClientesId(lngDesdeRegistro, (Long.valueOf(this.txtNumReg.getText())),tablaClientes,strBusqueda,idCliente);
         List<ClPs3> lista=dAOPs3.leerBuscar(ps3);
-        Object fila[] = new Object[8];
+        Object fila[] = new Object[10];
 //        String datos[]=new String [3];
         for (int i = 0; i < lista.size(); i++) {
             fila[0]=Integer.toString(lista.get(i).getId());
@@ -256,6 +266,8 @@ public class FrPs3 extends javax.swing.JFrame {
             fila[4]=lista.get(i).getIdiomas();
             fila[5]=lista.get(i).getJugadores();
             fila[6]=lista.get(i).getDisco();
+            fila[7]=lista.get(i).isUpdate();
+            fila[8]=lista.get(i).isDlc();
             try{
                 String urlImagen = System.getProperties().getProperty("user.dir")+"/IMG/PS3/"+lista.get(i).getCodigo()+".jpg";
                 ImageIcon icon = new ImageIcon(urlImagen);
@@ -265,10 +277,10 @@ public class FrPs3 extends javax.swing.JFrame {
 //                    InputStream in = new ByteArrayInputStream(bi);
 //                    image = ImageIO.read(in);
 //                    ImageIcon imgi = new ImageIcon(image.getScaledInstance(60, 60, 0));
-                    fila[7] = new JLabel(imgi);
+                    fila[9] = new JLabel(imgi);
 
                 }catch(Exception ex){
-                    fila[7] = new JLabel("No imagen");
+                    fila[9] = new JLabel("No imagen");
                 }
             tablaClientes.addRow(fila);
         }
@@ -282,13 +294,14 @@ public class FrPs3 extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroupUpdate = new javax.swing.ButtonGroup();
+        buttonGroupDLC = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         txtCodigo = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         txtNombre = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        txtRegion = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         txtIdiomas = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
@@ -308,6 +321,13 @@ public class FrPs3 extends javax.swing.JFrame {
         btnDescarImg = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        jcRegion = new javax.swing.JComboBox<>();
+        jLabel11 = new javax.swing.JLabel();
+        jrbUpNo = new javax.swing.JRadioButton();
+        jrbUpSi = new javax.swing.JRadioButton();
+        jLabel1 = new javax.swing.JLabel();
+        jrbDlcSi = new javax.swing.JRadioButton();
+        jrbDlcNo = new javax.swing.JRadioButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -331,9 +351,6 @@ public class FrPs3 extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel4.setText("Region:");
 
-        txtRegion.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtRegion.setText("NTSC-U");
-
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel5.setText("Idiomas:");
 
@@ -346,7 +363,7 @@ public class FrPs3 extends javax.swing.JFrame {
         jsJugadores.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel7.setText("Disco 1:");
+        jLabel7.setText("Disco:");
 
         txtDisco.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtDisco.setText("609");
@@ -462,6 +479,31 @@ public class FrPs3 extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jcRegion.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jcRegion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "NTSC-U", "PAL", "NTSC-J", "PSN" }));
+
+        jLabel11.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel11.setText("Update:");
+
+        buttonGroupUpdate.add(jrbUpNo);
+        jrbUpNo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jrbUpNo.setText("NO");
+
+        buttonGroupUpdate.add(jrbUpSi);
+        jrbUpSi.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jrbUpSi.setText("SI");
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel1.setText("DLC:");
+
+        buttonGroupDLC.add(jrbDlcSi);
+        jrbDlcSi.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jrbDlcSi.setText("SI");
+
+        buttonGroupDLC.add(jrbDlcNo);
+        jrbDlcNo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jrbDlcNo.setText("NO");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -479,31 +521,43 @@ public class FrPs3 extends javax.swing.JFrame {
                         .addComponent(txtNombre))
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel7)
+                                .addComponent(jLabel11)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtDisco, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jrbUpSi)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jcCapasidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(12, 12, 12)
+                                .addComponent(jrbUpNo)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jrbDlcSi)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jrbDlcNo)
+                                .addGap(18, 18, 18)
                                 .addComponent(jLabel10)
-                                .addGap(7, 7, 7)
-                                .addComponent(txtRuta, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtRuta)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton1))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtRegion, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jcRegion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel5)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtIdiomas, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtIdiomas, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel6)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jsJugadores, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jsJugadores, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel7)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtDisco, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jcCapasidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblImgen, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -520,22 +574,30 @@ public class FrPs3 extends javax.swing.JFrame {
                             .addComponent(jLabel3)
                             .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(txtRegion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5)
-                            .addComponent(txtIdiomas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6)
-                            .addComponent(jsJugadores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel7)
+                                .addComponent(txtDisco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jcCapasidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel4)
+                                .addComponent(jLabel5)
+                                .addComponent(txtIdiomas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel6)
+                                .addComponent(jsJugadores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jcRegion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel7)
-                            .addComponent(txtDisco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jcCapasidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel10)
                             .addComponent(txtRuta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1))
-                        .addGap(26, 26, 26)
+                            .addComponent(jButton1)
+                            .addComponent(jLabel11)
+                            .addComponent(jrbUpNo)
+                            .addComponent(jrbUpSi)
+                            .addComponent(jLabel1)
+                            .addComponent(jrbDlcSi)
+                            .addComponent(jrbDlcNo))
+                        .addGap(21, 21, 21)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 3, Short.MAX_VALUE))
                     .addComponent(lblImgen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -572,7 +634,7 @@ public class FrPs3 extends javax.swing.JFrame {
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 370, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -708,7 +770,9 @@ public class FrPs3 extends javax.swing.JFrame {
                     id = Integer.parseInt(String.valueOf(datosCliente.get(i).getId()));
                     this.txtCodigo.setText(datosCliente.get(i).getCodigo());
                     this.txtNombre.setText(datosCliente.get(i).getNombre());
-                    this.txtRegion.setText(datosCliente.get(i).getRegion());
+//                    this.txtRegion.setText(datosCliente.get(i).getRegion());
+                    cargarRegion(datosCliente.get(i).getRegion());
+                    
                     this.txtIdiomas.setText(datosCliente.get(i).getIdiomas());
                     this.jsJugadores.setValue(datosCliente.get(i).getJugadores());
 
@@ -718,7 +782,12 @@ public class FrPs3 extends javax.swing.JFrame {
 
                     String capacidad2 = disco.substring(disco.length() - 2, disco.length());
                     cargarDatosCap(capacidad2);
-
+                    
+                    boolean update = datosCliente.get(i).isUpdate();
+                    selectUpdate(update);
+                    boolean dlc = datosCliente.get(i).isDlc();
+                    selectDlc(dlc);
+                    
                     byte[] bi = datosCliente.get(i).getImagen();
                     BufferedImage image = null;
                     InputStream in = new ByteArrayInputStream(bi);
@@ -769,7 +838,37 @@ public class FrPs3 extends javax.swing.JFrame {
             jcCapasidad.setSelectedIndex(2);
         }
     }
-
+    public void cargarRegion(String reg){
+        if(reg.equals("NTSC-U")){
+            jcRegion.setSelectedIndex(0);
+        }
+        if(reg.equals("PAL")){
+            jcRegion.setSelectedIndex(1);
+        }
+        if(reg.equals("NTSC-J")){
+            jcRegion.setSelectedIndex(2);
+        }
+        if(reg.equals("PSN")){
+            jcRegion.setSelectedIndex(3);
+        }
+    }
+    public void selectUpdate(boolean update){
+        if(update==true){
+            jrbUpSi.setSelected(true);
+        }
+        if(update==false){
+            jrbUpNo.setSelected(true);
+        }
+    }
+    public void selectDlc(boolean dlc){
+        if(dlc==true){
+            jrbDlcSi.setSelected(true);
+        }
+        if(dlc==false){
+            jrbDlcNo.setSelected(true);
+        }
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -810,11 +909,15 @@ public class FrPs3 extends javax.swing.JFrame {
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnDescarImg;
     private javax.swing.JButton btnEliminar;
+    private javax.swing.ButtonGroup buttonGroupDLC;
+    private javax.swing.ButtonGroup buttonGroupUpdate;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -827,13 +930,17 @@ public class FrPs3 extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JComboBox<String> jcCapasidad;
+    private javax.swing.JComboBox<String> jcRegion;
+    private javax.swing.JRadioButton jrbDlcNo;
+    private javax.swing.JRadioButton jrbDlcSi;
+    private javax.swing.JRadioButton jrbUpNo;
+    private javax.swing.JRadioButton jrbUpSi;
     private javax.swing.JSpinner jsJugadores;
     private javax.swing.JLabel lblImgen;
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtDisco;
     private javax.swing.JTextField txtIdiomas;
     private javax.swing.JTextField txtNombre;
-    private javax.swing.JTextField txtRegion;
     private javax.swing.JTextField txtRuta;
     // End of variables declaration//GEN-END:variables
 }

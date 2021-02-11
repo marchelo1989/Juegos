@@ -17,6 +17,8 @@ public class ClPs3 {
     private String idiomas;
     private int jugadores;
     private String disco;
+    private boolean update;
+    private boolean dlc;
     private byte[] imagen;
     private String ruta;
     
@@ -76,6 +78,22 @@ public class ClPs3 {
         this.disco = disco;
     }
 
+    public boolean isUpdate() {
+        return update;
+    }
+
+    public void setUpdate(boolean update) {
+        this.update = update;
+    }
+
+    public boolean isDlc() {
+        return dlc;
+    }
+
+    public void setDlc(boolean dlc) {
+        this.dlc = dlc;
+    }
+
     public byte[] getImagen() {
         return imagen;
     }
@@ -92,17 +110,19 @@ public class ClPs3 {
         this.ruta = ruta;
     }
 
-    public ClPs3(String codigo, String nombre, String region, String idiomas, int jugadores, String disco, String ruta) {
+    public ClPs3(String codigo, String nombre, String region, String idiomas, int jugadores, String disco, boolean update, boolean dlc, String ruta) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.region = region;
         this.idiomas = idiomas;
         this.jugadores = jugadores;
         this.disco = disco;
+        this.update=update;
+        this.dlc=dlc;
         this.ruta = ruta;
     }
 
-    public ClPs3(int id, String codigo, String nombre, String region, String idiomas, int jugadores, String disco, byte[] imagen) {
+    public ClPs3(int id, String codigo, String nombre, String region, String idiomas, int jugadores, String disco, boolean update, boolean dlc, byte[] imagen) {
         this.id = id;
         this.codigo = codigo;
         this.nombre = nombre;
@@ -110,10 +130,12 @@ public class ClPs3 {
         this.idiomas = idiomas;
         this.jugadores = jugadores;
         this.disco = disco;
+        this.update=update;
+        this.dlc=dlc;
         this.imagen = imagen;
     }
 
-    public ClPs3(int id, String codigo, String nombre, String region, String idiomas, int jugadores, String disco, String ruta) {
+    public ClPs3(int id, String codigo, String nombre, String region, String idiomas, int jugadores, String disco, boolean update, boolean dlc, String ruta) {
         this.id = id;
         this.codigo = codigo;
         this.nombre = nombre;
@@ -121,6 +143,8 @@ public class ClPs3 {
         this.idiomas = idiomas;
         this.jugadores = jugadores;
         this.disco = disco;
+        this.update=update;
+        this.dlc=dlc;
         this.ruta = ruta;
     }
 
