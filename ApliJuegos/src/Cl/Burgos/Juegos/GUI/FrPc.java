@@ -897,12 +897,12 @@ public class FrPc extends javax.swing.JFrame {
                     String dato1 =disco1.substring(0,disco1.length()-3);
                     this.txtDisco.setText(dato1);
                     String capacidad1 = disco1.substring(disco1.length()-2,disco1.length());
-                    cargarDatosCap(capacidad1);
+                    cargarDatosCapDisco(capacidad1);
                     
                     String proce1 = datosCliente.get(i).getProce();
                     String dato4 =proce1.substring(0,proce1.length()-3);
                     this.txtProsesador.setText(dato4);
-                    String capacidad4 = proce1.substring(proce1.length()-2,proce1.length());
+                    String capacidad4 = proce1.substring(proce1.length()-3,proce1.length());
                     cargarDatosProc(capacidad4);
                     
                     windows(datosCliente.get(i).getSistemaOper());
@@ -911,13 +911,13 @@ public class FrPc extends javax.swing.JFrame {
                     String dato5 =disco5.substring(0,disco5.length()-3);
                     this.txtRam.setText(dato5);
                     String capacidad5 = disco5.substring(disco5.length()-2,disco5.length());
-                    cargarDatosCap(capacidad5);
+                    cargarDatosCapRam(capacidad5);
                     
                     String disco6 = datosCliente.get(i).getVideo();
                     String dato6 =disco6.substring(0,disco6.length()-3);
                     this.txtVideo.setText(dato6);
                     String capacidad6 = disco6.substring(disco6.length()-2,disco6.length());
-                    cargarDatosCap(capacidad6);
+                    cargarDatosCapVideo(capacidad6);
                     
                     byte[] bi = datosCliente.get(i).getImagen();
                     BufferedImage image = null;
@@ -960,15 +960,24 @@ public class FrPc extends javax.swing.JFrame {
             if(parts[i].equals("10")){ jRadioButton9.setSelected(true); }
         }
     }
-    public void cargarDatosCap(String ram){
-        if(ram.equals("MB")){jcCapaDisco.setSelectedIndex(0);}
-        if(ram.equals("GB")){jcCapaDisco.setSelectedIndex(1);}
-        if(ram.equals("TB")){jcCapaDisco.setSelectedIndex(2);}
+    public void cargarDatosCapDisco(String disco){
+        if(disco.equals("MB")){jcCapaDisco.setSelectedIndex(0);}
+        if(disco.equals("GB")){jcCapaDisco.setSelectedIndex(1);}
+        if(disco.equals("TB")){jcCapaDisco.setSelectedIndex(2);}
     }
-    
+    public void cargarDatosCapRam(String ram){
+        if(ram.equals("MB")){jcCapaRam.setSelectedIndex(0);}
+        if(ram.equals("GB")){jcCapaRam.setSelectedIndex(1);}
+        if(ram.equals("TB")){jcCapaRam.setSelectedIndex(2);}
+    }
+    public void cargarDatosCapVideo(String video){
+        if(video.equals("MB")){jcCapaVideo.setSelectedIndex(0);}
+        if(video.equals("GB")){jcCapaVideo.setSelectedIndex(1);}
+        if(video.equals("TB")){jcCapaVideo.setSelectedIndex(2);}
+    }
     public void cargarDatosProc(String pro){
         if(pro.equals("MHz")){jcCapaProse.setSelectedIndex(0);}
-        if(pro.equals("GHz")){jcCapaDisco.setSelectedIndex(1);}
+        if(pro.equals("GHz")){jcCapaProse.setSelectedIndex(1);}
     }
     /**
      * @param args the command line arguments

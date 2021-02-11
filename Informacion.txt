@@ -3,3 +3,4 @@
 	v1.1 Implementación de PDF, crea archivos en PDF sobre los juegos en la BD
 	v1.2 Reparación del directorio predeterminado
 	v1.3 Se le agrego el sistema operativo Windows 2000 a los registros de pc
+	v1.4 Se ha corregido el problema de visualización de la capacidad de video, disco, procesador y RAM
