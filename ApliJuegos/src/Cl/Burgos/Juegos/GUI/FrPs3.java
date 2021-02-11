@@ -8,8 +8,8 @@ package Cl.Burgos.Juegos.GUI;
 import Cl.Burgos.Juegos.DAO.DAOPs3;
 import Cl.Burgos.Juegos.ENT.ClPs3;
 import Cl.Burgos.Juegos.FUN.Archivos;
+import Cl.Burgos.Juegos.FUN.Log;
 import Cl.Burgos.Juegos.FUN.Render;
-import Cl.Burgos.Juegos.Main.ApliJuegos;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
@@ -17,8 +17,6 @@ import java.awt.image.RenderedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.StringTokenizer;
 import javax.imageio.ImageIO;
@@ -125,7 +123,8 @@ public class FrPs3 extends javax.swing.JFrame {
             archivos.CopiarArchivos(txtRuta.getText(), System.getProperties().getProperty("user.dir")+"/IMG/PS3/"+codi.trim()+".jpg");
             clPs3 = new ClPs3(codi.trim(), txtNombre.getText().trim(), region, txtIdiomas.getText().trim(), jsJugadores.getValue().hashCode(), txtDisco.getText().trim() + " " + capasid, update, dlc, txtRuta.getText());
         } else {
-            String ruta = "./src/Cl/Burgos/Juegos/IMG/PS3.png";
+            String ruta = "./src/Cl/Burgos/Juegos/IMG/PS3.jpg";
+            archivos.CopiarArchivos(ruta, System.getProperties().getProperty("user.dir")+"/IMG/PS3/"+codi.trim()+".jpg");
             clPs3 = new ClPs3(codi.trim(), txtNombre.getText().trim(), region, txtIdiomas.getText().trim(), jsJugadores.getValue().hashCode(), txtDisco.getText().trim() + " " + capasid, update, dlc, ruta);
         }
         return clPs3;
@@ -136,14 +135,14 @@ public class FrPs3 extends javax.swing.JFrame {
         String capasid = jcCapasidad.getSelectedItem().toString();
         boolean update = jrbUpSi.isSelected();
         boolean dlc = jrbDlcSi.isSelected();
-        ClPs3 clPs2= null;
+        ClPs3 clPs3= null;
         if(txtRuta.getText().length()>0){
             archivos.CopiarArchivos(txtRuta.getText(), System.getProperties().getProperty("user.dir")+"/IMG/PS3/"+txtCodigo.getText().trim()+".jpg");
-            clPs2 = new ClPs3(id, txtCodigo.getText().trim(), txtNombre.getText().trim(), region, txtIdiomas.getText().trim(), jsJugadores.getValue().hashCode(), txtDisco.getText().trim() + " " + capasid, update, dlc, txtRuta.getText());
+            clPs3 = new ClPs3(id, txtCodigo.getText().trim(), txtNombre.getText().trim(), region, txtIdiomas.getText().trim(), jsJugadores.getValue().hashCode(), txtDisco.getText().trim() + " " + capasid, update, dlc, txtRuta.getText());
         }else{
-            clPs2 = new ClPs3(id, txtCodigo.getText().trim(), txtNombre.getText().trim(), region, txtIdiomas.getText().trim(), jsJugadores.getValue().hashCode(), txtDisco.getText().trim() + " " + capasid, update, dlc, txtRuta.getText());
+            clPs3 = new ClPs3(id, txtCodigo.getText().trim(), txtNombre.getText().trim(), region, txtIdiomas.getText().trim(), jsJugadores.getValue().hashCode(), txtDisco.getText().trim() + " " + capasid, update, dlc, txtRuta.getText());
         }
-        return clPs2;
+        return clPs3;
     }
 
     public ClPs3 eliLis() {
@@ -193,20 +192,29 @@ public class FrPs3 extends javax.swing.JFrame {
             fila[4] = lista.get(i).getIdiomas();
             fila[5] = lista.get(i).getJugadores();
             fila[6] = lista.get(i).getDisco();
-            fila[7] = lista.get(i).isUpdate();
-            fila[8] = lista.get(i).isDlc();
+            
+            String upt=siyno(lista.get(i).isUpdate());
+            fila[7] = upt;
+            String dlc =siyno(lista.get(i).isDlc());
+            fila[8] = dlc;
+            
             try {
                 String urlImagen = System.getProperties().getProperty("user.dir")+"/IMG/PS3/"+lista.get(i).getCodigo()+".jpg";
-                ImageIcon icon = new ImageIcon(urlImagen);
-                ImageIcon imgi = new ImageIcon(icon.getImage().getScaledInstance(120,60,Image.SCALE_DEFAULT)); 
-//                byte[] bi = lista.get(i).getImagen();
-//                BufferedImage image = null;
-//                image = ImageIO.read(new ByteArrayInputStream(bi));
-//                ImageIcon imgi = new ImageIcon(image.getScaledInstance(120, 60, 0));
-                fila[9] = new JLabel(imgi);
-
+                File archivo = new File(urlImagen);
+                if (!archivo.exists()) {
+                    String ruta = "./src/Cl/Burgos/Juegos/IMG/Sin Imagen.jpg";
+                    ImageIcon icon = new ImageIcon(ruta);
+                    ImageIcon imgi = new ImageIcon(icon.getImage().getScaledInstance(120,60,Image.SCALE_DEFAULT)); 
+                    fila[9] = new JLabel(imgi);
+                }else{
+                    ImageIcon icon = new ImageIcon(urlImagen);
+                    ImageIcon imgi = new ImageIcon(icon.getImage().getScaledInstance(120,60,Image.SCALE_DEFAULT)); 
+                    fila[9] = new JLabel(imgi);
+                }
+                
             } catch (Exception ex) {
-                fila[9] = new JLabel("No imagen");
+                Log.log(ex.getMessage());
+                
             }
             tablaClientes.addRow(fila);
         }
@@ -268,22 +276,30 @@ public class FrPs3 extends javax.swing.JFrame {
             fila[4]=lista.get(i).getIdiomas();
             fila[5]=lista.get(i).getJugadores();
             fila[6]=lista.get(i).getDisco();
-            fila[7]=lista.get(i).isUpdate();
-            fila[8]=lista.get(i).isDlc();
+            
+            String upt=siyno(lista.get(i).isUpdate());
+            fila[7] = upt;
+            String dlc =siyno(lista.get(i).isDlc());
+            fila[8] = dlc;
+            
             try{
                 String urlImagen = System.getProperties().getProperty("user.dir")+"/IMG/PS3/"+lista.get(i).getCodigo()+".jpg";
-                ImageIcon icon = new ImageIcon(urlImagen);
-                ImageIcon imgi = new ImageIcon(icon.getImage().getScaledInstance(60,60,Image.SCALE_DEFAULT)); 
-//                    byte[] bi = lista.get(i).getImagen();
-//                    BufferedImage image = null;
-//                    InputStream in = new ByteArrayInputStream(bi);
-//                    image = ImageIO.read(in);
-//                    ImageIcon imgi = new ImageIcon(image.getScaledInstance(60, 60, 0));
+                File archivo = new File(urlImagen);
+                if (!archivo.exists()) {
+                    String ruta = "./src/Cl/Burgos/Juegos/IMG/Sin Imagen.jpg";
+                    ImageIcon icon = new ImageIcon(ruta);
+                    ImageIcon imgi = new ImageIcon(icon.getImage().getScaledInstance(120,60,Image.SCALE_DEFAULT)); 
                     fila[9] = new JLabel(imgi);
-
-                }catch(Exception ex){
-                    fila[9] = new JLabel("No imagen");
+                }else{
+                    ImageIcon icon = new ImageIcon(urlImagen);
+                    ImageIcon imgi = new ImageIcon(icon.getImage().getScaledInstance(120,60,Image.SCALE_DEFAULT)); 
+                    fila[9] = new JLabel(imgi);
                 }
+                
+            } catch (Exception ex) {
+                Log.log(ex.getMessage());
+                
+            }
             tablaClientes.addRow(fila);
         }
     }
@@ -556,8 +572,8 @@ public class FrPs3 extends javax.swing.JFrame {
                         .addComponent(txtNombre))
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel11)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jrbUpSi)
@@ -572,7 +588,7 @@ public class FrPs3 extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel10)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtRuta)
+                                .addComponent(txtRuta, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton1))
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -708,12 +724,18 @@ public class FrPs3 extends javax.swing.JFrame {
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
-        if (!dAOPs3.sqlDelete(eliLis())) {
+        int resp = JOptionPane.showConfirmDialog(null, "¿Desea Eliminar el Registro? ", "Alerta!", JOptionPane.YES_NO_OPTION);
+        if(resp==0){
+            if (!dAOPs3.sqlDelete(eliLis())) {
             JOptionPane.showMessageDialog(null, "Juego No Eliminado");
-        } else {
-            JOptionPane.showMessageDialog(null, "Juegos Eliminado");
-            Limpiar();
+            } else {
+                JOptionPane.showMessageDialog(null, "Juegos Eliminado");
+                Limpiar();
+            }
+        }else if(resp==1){
+//            System.out.println("No");
         }
+        
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -731,7 +753,6 @@ public class FrPs3 extends javax.swing.JFrame {
             List<ClPs3> datosCliente = dAOPs3.leerPs32(eliLis());
             for (int i = 0; i < datosCliente.size(); i++) {
                 id = Integer.parseInt(String.valueOf(datosCliente.get(i).getId()));
-//                nombre = datosCliente.get(i).getCodigo() + "-" + datosCliente.get(i).getNombre() + ".png";
                 nombre = datosCliente.get(i).getCodigo() + ".jpg";
                 byte[] bi = datosCliente.get(i).getImagen();
                 BufferedImage image = null;
@@ -761,22 +782,19 @@ public class FrPs3 extends javax.swing.JFrame {
         // TODO add your handling code here:
         int fila;
 
-        //        this.txtId.getText();
-        //        List<ClUsuario> datosCliente;
         fila = this.jTable1.rowAtPoint(evt.getPoint());
 
         if (fila > -1) {
             try {
                 id = Integer.parseInt(String.valueOf(jTable1.getValueAt(fila, 0)));
-
+                
                 List<ClPs3> datosCliente = dAOPs3.leerPs32(eliLis());
                 for (int i = 0; i < datosCliente.size(); i++) {
                     id = Integer.parseInt(String.valueOf(datosCliente.get(i).getId()));
                     this.txtCodigo.setText(datosCliente.get(i).getCodigo());
                     this.txtNombre.setText(datosCliente.get(i).getNombre());
-//                    this.txtRegion.setText(datosCliente.get(i).getRegion());
                     cargarRegion(datosCliente.get(i).getRegion());
-                    
+
                     this.txtIdiomas.setText(datosCliente.get(i).getIdiomas());
                     this.jsJugadores.setValue(datosCliente.get(i).getJugadores());
 
@@ -786,35 +804,31 @@ public class FrPs3 extends javax.swing.JFrame {
 
                     String capacidad2 = disco.substring(disco.length() - 2, disco.length());
                     cargarDatosCap(capacidad2);
-                    
+
                     boolean update = datosCliente.get(i).isUpdate();
                     selectUpdate(update);
                     boolean dlc = datosCliente.get(i).isDlc();
                     selectDlc(dlc);
-                    
+
                     byte[] bi = datosCliente.get(i).getImagen();
                     BufferedImage image = null;
                     InputStream in = new ByteArrayInputStream(bi);
                     image = ImageIO.read(in);
                     ImageIcon imgi = new ImageIcon(image.getScaledInstance(lblImgen.getWidth(), lblImgen.getHeight(), Image.SCALE_DEFAULT));
                     this.lblImgen.setText("");
-                    this.lblImgen.setIcon(imgi);
+                    this.lblImgen.setIcon(imgi);               
                 }
+                
                 this.btnAgregar.setEnabled(false);
                 this.btnEliminar.setEnabled(true);
                 this.btnActualizar.setEnabled(true);
                 this.btnDescarImg.setEnabled(true);
-
-                //                if(Long.valueOf( datosCliente[0])>0){
-                //                    this.btnActualizar.setLabel("Actualizar");
-                //                }
+                
             } catch (Exception ex) {
-                //                Logger.getLogger(FrManteLogin.class.getName()).log(Level.SEVERE, null, ex);
-                JOptionPane.showMessageDialog(null, ex.getMessage());
-                //                Log.log(ex.getMessage());
-                //                log.fatal(ex.getMessage());
-            }
+                Log.log(ex.getMessage());
+//                JOptionPane.showMessageDialog(null, ex.getMessage());
         }
+}
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed

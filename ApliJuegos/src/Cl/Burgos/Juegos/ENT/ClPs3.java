@@ -110,6 +110,7 @@ public class ClPs3 {
         this.ruta = ruta;
     }
 
+    //Insertar
     public ClPs3(String codigo, String nombre, String region, String idiomas, int jugadores, String disco, boolean update, boolean dlc, String ruta) {
         this.codigo = codigo;
         this.nombre = nombre;

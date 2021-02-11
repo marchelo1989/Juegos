@@ -25,30 +25,11 @@ public class ApliJuegos {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-//        int resp = JOptionPane.showConfirmDialog(null, "¿Decea descargar imágenes? ", "Alerta!", JOptionPane.YES_NO_OPTION);
-//        if(resp==0){
-            Directorio.crearDirec();
-//            FrDescargarImg frDescargarImg = new FrDescargarImg();
-//            frDescargarImg.setVisible(true);
-//        }else if(resp==1){
-            if(buscarUpdate()==false){
-                new FrHome().setVisible(true);
-            }
-//        }else{
-//            System.exit(0);
-//        }
-        
-//        DescargarImg();
+        Directorio.crearDirec();
+        if(buscarUpdate()==false){
+            new FrHome().setVisible(true);
+        }
     }
-//    public static void DescargarImg(){
-//        DescargarIMGAll all = new DescargarIMGAll();
-////        all.DescargarImgPS1();
-////        all.DescargarImgPS2();
-////        all.DescargarImgPSP();
-////        all.DescargarImgPS3();
-////        JOptionPane.showMessageDialog(null, all.TotalJuegos());
-//        System.exit(0);
-//    }
     public static boolean buscarUpdate(){
         boolean resp;
         if(Actualizacion.verificarConexion()){

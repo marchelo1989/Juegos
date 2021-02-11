@@ -7,3 +7,4 @@
 	v1.5 se ha implementado los campos Update y DLC a la interfaz de PS3 y se a cambiado el campo region para mejor manejo
 	v1.6 cambio de la interfaz de archivos a una pestaña de la misma interfaz cambios en la creación de PDF orden del código de creación de directorios
 	v1.7 Eliminación de la ventana de archivo en la interfaz de PS3 implementación del código de log para registro de errores 
+	v1.8 Se integro al menú principal la opción de descargar imágenes y crear PDF también se implementó en la DAOPS3 el registro Log y cambio en algunas url del programa 

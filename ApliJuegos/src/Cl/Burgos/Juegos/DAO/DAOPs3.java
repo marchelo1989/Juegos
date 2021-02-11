@@ -7,6 +7,7 @@ package Cl.Burgos.Juegos.DAO;
 
 import Cl.Burgos.Juegos.BD.BD;
 import Cl.Burgos.Juegos.ENT.ClPs3;
+import Cl.Burgos.Juegos.FUN.Log;
 import com.itextpdf.io.font.FontConstants;
 import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.font.PdfFont;
@@ -43,9 +44,10 @@ public class DAOPs3 {
         FileInputStream fi = null;
         PreparedStatement ps = null;
         try{
+            
             File file = new File(ps3.getRuta());
             fi = new FileInputStream(file);
-            
+
             ps = con.prepareStatement(insert);
             ps.setString(1, ps3.getCodigo());
             ps.setString(2, ps3.getNombre());
@@ -60,7 +62,7 @@ public class DAOPs3 {
             ps.execute();
             return true;
         }catch(Exception ex){
-            System.out.println(ex.getMessage());
+            Log.log(ex.getMessage());
             return false;
         }
     }
@@ -172,7 +174,6 @@ public class DAOPs3 {
          ResultSet rs=BD.getInstance().sqlSelect(strConsulta);
          if(rs==null)return null;
          while(rs.next()){
-             System.out.println(rs.getString("nombre"));
              ClPs3 c = new ClPs3(rs.getInt("IdPs3"), rs.getString("codigo"), rs.getString("nombre"), 
                      rs.getString("region"), rs.getString("lenguaje"), rs.getInt("jugadores"), rs.getString("disco"),
                      rs.getBoolean("update"), rs.getBoolean("dlc"),rs.getBytes("imagen"));
