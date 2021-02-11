@@ -19,7 +19,7 @@ import javax.swing.JOptionPane;
  */
 public class ApliJuegos {
 
-    public static String Url;
+    public static String Url=System.getProperty("user.dir");
     /**
      * @param args the command line arguments
      */
@@ -30,7 +30,7 @@ public class ApliJuegos {
             //Para Seleccionar el Directorio
             //Url=Directorio.selecDirectrorio();
             //Directorio predeterminado
-            Url="..//ApliJuegos";
+//            Url="..//ApliJuegos";
             Directorio.Url= Url;
             Directorio.crearDirecPre();
             Directorio.crearDirecPSX();
@@ -73,7 +73,7 @@ public class ApliJuegos {
                     resp=true;
                 }else{
                     resp=false;
-                }
+}
             }
         }else{
             resp=false;

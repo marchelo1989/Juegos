@@ -1,0 +1,3 @@
+-ApliJuegos
+	v1.0 implementación de clases para el funcionamiento
+	v1.1 Implementación de PDF, crea archivos en PDF sobre los juegos en la BD
