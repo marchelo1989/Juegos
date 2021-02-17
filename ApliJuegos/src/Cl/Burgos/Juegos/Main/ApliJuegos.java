@@ -25,11 +25,11 @@ public class ApliJuegos {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        Directorio.crearDirec();
+            Directorio.crearDirec();
         if(buscarUpdate()==false){
             new FrHome().setVisible(true);
-        }
     }
+}
     public static boolean buscarUpdate(){
         boolean resp;
         if(Actualizacion.verificarConexion()){
