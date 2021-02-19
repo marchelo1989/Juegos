@@ -40,7 +40,7 @@ import javax.swing.JOptionPane;
 public class DAOPs4 {
     public boolean sqlInsert(ClPs4 ps4) {
         Connection con = BD.getInstance().conectar();
-        String insert = "insert into ps4(codigo,nombre,region,lenguaje,jugadores,disco,update,dlc,imagen) values (?,?,?,?,?,?,?,?,?)";
+        String insert = "insert into ps4(codigo,nombre,region,lenguaje,jugadores,disco,update,patch,dlc,imagen) values (?,?,?,?,?,?,?,?,?,?)";
         FileInputStream fi = null;
         PreparedStatement ps = null;
         try{
@@ -56,8 +56,9 @@ public class DAOPs4 {
             ps.setInt(5, ps4.getJugadores());
             ps.setString(6, ps4.getDisco());
             ps.setBoolean(7, ps4.isUpdate());
-            ps.setBoolean(8, ps4.isDlc());
-            ps.setBinaryStream(9, fi);
+            ps.setString(8, ps4.getPatch());
+            ps.setBoolean(9, ps4.isDlc());
+            ps.setBinaryStream(10, fi);
             
             ps.execute();
             return true;
@@ -69,8 +70,8 @@ public class DAOPs4 {
     
     public boolean sqlUpdate(ClPs4 clPs4){	
         Connection con = BD.getInstance().conectar();
-        String insert = "update ps4 set codigo=?, nombre=?, region=?, lenguaje=?, jugadores=?, disco=?,update=?, dlc=?, imagen=? where IdPs4=?;";
-        String insert2 = "update ps4 set codigo=?, nombre=?, region=?, lenguaje=?, jugadores=?, disco=?, update=?, dlc=? where IdPs4=?;";
+        String insert = "update ps4 set codigo=?, nombre=?, region=?, lenguaje=?, jugadores=?, disco=?, patch=?,update=?, dlc=?, imagen=? where IdPs4=?;";
+        String insert2 = "update ps4 set codigo=?, nombre=?, region=?, lenguaje=?, jugadores=?, disco=?, update=?, patch=?, dlc=? where IdPs4=?;";
         FileInputStream fi = null;
         PreparedStatement ps = null;
         try{
@@ -86,9 +87,10 @@ public class DAOPs4 {
                 ps.setInt(5, clPs4.getJugadores());
                 ps.setString(6, clPs4.getDisco());
                 ps.setBoolean(7, clPs4.isUpdate());
-                ps.setBoolean(8, clPs4.isDlc());
-                ps.setBinaryStream(9, fi);
-                ps.setInt(10, clPs4.getId());
+                ps.setString(8, clPs4.getPatch());
+                ps.setBoolean(9, clPs4.isDlc());
+                ps.setBinaryStream(10, fi);
+                ps.setInt(11, clPs4.getId());
             }else{
                 ps = con.prepareStatement(insert2);
                 ps.setString(1, clPs4.getCodigo());
@@ -98,8 +100,9 @@ public class DAOPs4 {
                 ps.setInt(5, clPs4.getJugadores());
                 ps.setString(6, clPs4.getDisco());
                 ps.setBoolean(7, clPs4.isUpdate());
-                ps.setBoolean(8, clPs4.isDlc());
-                ps.setInt(9, clPs4.getId());
+                ps.setString(8, clPs4.getPatch());
+                ps.setBoolean(9, clPs4.isDlc());
+                ps.setInt(10, clPs4.getId());
             }
             
             ps.executeUpdate();
@@ -132,7 +135,7 @@ public class DAOPs4 {
         List<ClPs4> lista=new ArrayList<>();
         String strConsulta;
         
-        strConsulta="select IdPs4,codigo,nombre,region,lenguaje,jugadores,disco,update,dlc,imagen from ps4 order by nombre asc;";
+        strConsulta="select IdPs4,codigo,nombre,region,lenguaje,jugadores,disco,update,patch,dlc,imagen from ps4 order by nombre asc;";
         
         try{
          ResultSet rs=BD.getInstance().sqlSelect(strConsulta);
@@ -140,7 +143,7 @@ public class DAOPs4 {
          while(rs.next()){
              ClPs4 c = new ClPs4(rs.getInt("IdPs4"), rs.getString("codigo"), rs.getString("nombre"), 
                      rs.getString("region"), rs.getString("lenguaje"), rs.getInt("jugadores"), rs.getString("disco"), 
-                     rs.getBoolean("update"), rs.getBoolean("dlc"),rs.getBytes("imagen"));
+                     rs.getBoolean("update"), rs.getString("patch"), rs.getBoolean("dlc"),rs.getBytes("imagen"));
               lista.add(c);
          }
          
@@ -168,7 +171,7 @@ public class DAOPs4 {
         if(clPs4.getCodigo().length()>1 && clPs4.getNombre().length()>1){
             resp="codigo='"+clPs4.getCodigo()+"' and nombre like '%"+clPs4.getNombre()+"%'";
         }
-        strConsulta="select IdPs4,codigo,nombre,region,lenguaje,jugadores,disco,update,dlc,imagen from ps4 where "+resp+" order by nombre asc";
+        strConsulta="select IdPs4,codigo,nombre,region,lenguaje,jugadores,disco,update,patch,dlc,imagen from ps4 where "+resp+" order by nombre asc";
         
         try{
          ResultSet rs=BD.getInstance().sqlSelect(strConsulta);
@@ -176,7 +179,7 @@ public class DAOPs4 {
          while(rs.next()){
              ClPs4 c = new ClPs4(rs.getInt("IdPs4"), rs.getString("codigo"), rs.getString("nombre"), 
                      rs.getString("region"), rs.getString("lenguaje"), rs.getInt("jugadores"), rs.getString("disco"),
-                     rs.getBoolean("update"), rs.getBoolean("dlc"),rs.getBytes("imagen"));
+                     rs.getBoolean("update"), rs.getString("patch"), rs.getBoolean("dlc"),rs.getBytes("imagen"));
               lista.add(c);
          }
          
@@ -194,7 +197,7 @@ public class DAOPs4 {
         List<ClPs4> lista=new ArrayList<>();
         String strConsulta;
         
-        strConsulta="select IdPs4,codigo,nombre,region,lenguaje,jugadores,disco,update,dlc,imagen from ps4 where IdPs4="+clPs4.getId();
+        strConsulta="select IdPs4,codigo,nombre,region,lenguaje,jugadores,disco,update,patch,dlc,imagen from ps4 where IdPs4="+clPs4.getId();
         
         try{
          ResultSet rs=BD.getInstance().sqlSelect(strConsulta);
@@ -202,7 +205,7 @@ public class DAOPs4 {
          while(rs.next()){
              ClPs4 c = new ClPs4(rs.getInt("IdPs4"), rs.getString("codigo"), rs.getString("nombre"), 
                      rs.getString("region"), rs.getString("lenguaje"), rs.getInt("jugadores"), rs.getString("disco"), 
-                     rs.getBoolean("update"), rs.getBoolean("dlc"),rs.getBytes("imagen"));
+                     rs.getBoolean("update"), rs.getString("patch"), rs.getBoolean("dlc"),rs.getBytes("imagen"));
               lista.add(c);
          }
          
@@ -277,7 +280,7 @@ public class DAOPs4 {
             parrafo1.setFontSize(12f);
             
             // Creamos unas tablas
-            float[] anchos = {10f, 50f, 50f, 50f, 50f, 50f, 50f, 50f, 60f};
+            float[] anchos = {10f, 50f, 50f, 50f, 50f, 50f, 50f, 50f, 50f, 60f};
             Table tabla1 = new Table(anchos);
             Table tabla2 = new Table(anchos);
             
@@ -290,6 +293,7 @@ public class DAOPs4 {
             tabla1.addCell("Player");
             tabla1.addCell("Disco");
             tabla1.addCell("Update");
+            tabla1.addCell("Patch");
             tabla1.addCell("DLC");
             tabla1.addCell("Imagen");
             List<ClPs4> lista=new DAOPs4().leerPs4();
@@ -302,6 +306,7 @@ public class DAOPs4 {
                 tabla1.addCell(Integer.toString(lista.get(i).getJugadores()));
                 tabla1.addCell(lista.get(i).getDisco());
                 tabla1.addCell(siyno(lista.get(i).isUpdate()));
+                tabla1.addCell(lista.get(i).getPatch());
                 tabla1.addCell(siyno(lista.get(i).isDlc()));
                 Image img = new Image(ImageDataFactory.create(lista.get(i).getImagen()));
                 img.scaleToFit(60, 60);

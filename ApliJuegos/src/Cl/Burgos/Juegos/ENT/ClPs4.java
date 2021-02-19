@@ -18,6 +18,7 @@ public class ClPs4 {
     private int jugadores;
     private String disco;
     private boolean update;
+    private String patch;
     private boolean dlc;
     private byte[] imagen;
     private String ruta;
@@ -86,6 +87,14 @@ public class ClPs4 {
         this.update = update;
     }
 
+    public String getPatch() {
+        return patch;
+    }
+
+    public void setPatch(String patch) {
+        this.patch = patch;
+    }
+
     public boolean isDlc() {
         return dlc;
     }
@@ -111,7 +120,7 @@ public class ClPs4 {
     }
     
     //Insertar
-    public ClPs4(String codigo, String nombre, String region, String idiomas, int jugadores, String disco, boolean update, boolean dlc, String ruta) {
+    public ClPs4(String codigo, String nombre, String region, String idiomas, int jugadores, String disco, boolean update, String patch, boolean dlc, String ruta) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.region = region;
@@ -119,11 +128,12 @@ public class ClPs4 {
         this.jugadores = jugadores;
         this.disco = disco;
         this.update=update;
+        this.patch=patch;
         this.dlc=dlc;
         this.ruta = ruta;
     }
 
-    public ClPs4(int id, String codigo, String nombre, String region, String idiomas, int jugadores, String disco, boolean update, boolean dlc, byte[] imagen) {
+    public ClPs4(int id, String codigo, String nombre, String region, String idiomas, int jugadores, String disco, boolean update, String patch, boolean dlc, byte[] imagen) {
         this.id = id;
         this.codigo = codigo;
         this.nombre = nombre;
@@ -132,11 +142,12 @@ public class ClPs4 {
         this.jugadores = jugadores;
         this.disco = disco;
         this.update=update;
+        this.patch=patch;
         this.dlc=dlc;
         this.imagen = imagen;
     }
 
-    public ClPs4(int id, String codigo, String nombre, String region, String idiomas, int jugadores, String disco, boolean update, boolean dlc, String ruta) {
+    public ClPs4(int id, String codigo, String nombre, String region, String idiomas, int jugadores, String disco, boolean update, String patch, boolean dlc, String ruta) {
         this.id = id;
         this.codigo = codigo;
         this.nombre = nombre;
@@ -145,6 +156,7 @@ public class ClPs4 {
         this.jugadores = jugadores;
         this.disco = disco;
         this.update=update;
+        this.patch=patch;
         this.dlc=dlc;
         this.ruta = ruta;
     }

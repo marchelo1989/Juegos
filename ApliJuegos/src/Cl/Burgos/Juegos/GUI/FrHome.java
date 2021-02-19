@@ -5,6 +5,7 @@
  */
 package Cl.Burgos.Juegos.GUI;
 
+import Cl.Burgos.Juegos.FUN.Actualizacion;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;

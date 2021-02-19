@@ -1,0 +1,3 @@
+Al descargar las imagenes del programa
+redimencionar a 200*200 para que el programa
+trabaje mas rapido 

@@ -8,7 +8,7 @@ package Cl.Burgos.Juegos.FUN;
 /**
  *
  * @author march
- * v1.9
+ * v1.10
  */
 public interface Confi {
     
@@ -18,7 +18,7 @@ public interface Confi {
     //Configuraciones para Update
     static String nameArchivo = "ApliJuegos.zip";
     static String CarpetaUpdate = "Update/";
-    static String Version = "1.9";
+    static String Version = "1.10";
     static String UrlVersion = "https://raw.githubusercontent.com/marchelo1989/Juegos/main/version.txt";
     static String UrlDescarga = "https://raw.githubusercontent.com/marchelo1989/Juegos/main/Descarga.txt";
 }

@@ -1,0 +1,3 @@
+Para Actualizar eliminar todos los demas archivos menos la BD Juegos.accdb y la Carpeta IMG
+y despues descomprimir ApliJuegos.zip
+y listo
