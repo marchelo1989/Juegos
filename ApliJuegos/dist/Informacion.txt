@@ -8,7 +8,4 @@
 	v1.6 cambio de la interfaz de archivos a una pestaña de la misma interfaz cambios en la creación de PDF orden del código de creación de directorios
 	v1.7 Eliminación de la ventana de archivo en la interfaz de PS3 implementación del código de log para registro de errores 
 	v1.8 Se integro al menú principal la opción de descargar imágenes y crear PDF también se implementó en la DAOPS3 el registro Log y cambio en algunas url del programa 
-	v1.8.2 implementación de Nuevo Juegos PS4 boton de PS4 en Home
-	v1.8.3 Integracion de los datos se agrego datos al Excel para Trabajar la BD
 	v1.9 Implementado PS4 Interfaz de PS4 Completa
-	v1.10 Implementación de versiones de update a la interfaz de PS4

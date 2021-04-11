@@ -8,7 +8,8 @@ package Cl.Burgos.Juegos.DAO;
 import Cl.Burgos.Juegos.BD.BD;
 import Cl.Burgos.Juegos.ENT.ClPs4;
 import Cl.Burgos.Juegos.FUN.Log;
-import com.itextpdf.io.font.FontConstants;
+//import com.itextpdf.io.font.FontConstants;
+import com.itextpdf.io.font.constants.StandardFonts;
 import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
@@ -70,7 +71,7 @@ public class DAOPs4 {
     
     public boolean sqlUpdate(ClPs4 clPs4){	
         Connection con = BD.getInstance().conectar();
-        String insert = "update ps4 set codigo=?, nombre=?, region=?, lenguaje=?, jugadores=?, disco=?, patch=?,update=?, dlc=?, imagen=? where IdPs4=?;";
+        String insert = "update ps4 set codigo=?, nombre=?, region=?, lenguaje=?, jugadores=?, disco=?, imagen=?, update=?, patch=?, dlc=? where IdPs4=?;";
         String insert2 = "update ps4 set codigo=?, nombre=?, region=?, lenguaje=?, jugadores=?, disco=?, update=?, patch=?, dlc=? where IdPs4=?;";
         FileInputStream fi = null;
         PreparedStatement ps = null;
@@ -86,10 +87,10 @@ public class DAOPs4 {
                 ps.setString(4, clPs4.getIdiomas());
                 ps.setInt(5, clPs4.getJugadores());
                 ps.setString(6, clPs4.getDisco());
-                ps.setBoolean(7, clPs4.isUpdate());
-                ps.setString(8, clPs4.getPatch());
-                ps.setBoolean(9, clPs4.isDlc());
-                ps.setBinaryStream(10, fi);
+                ps.setBinaryStream(7, fi);
+                ps.setBoolean(8, clPs4.isUpdate());
+                ps.setString(9, clPs4.getPatch());
+                ps.setBoolean(10, clPs4.isDlc());
                 ps.setInt(11, clPs4.getId());
             }else{
                 ps = con.prepareStatement(insert2);
@@ -272,7 +273,7 @@ public class DAOPs4 {
             //Arriba,Abajo,derecha,izqueda
             doc.setMargins(80, 20, 20, 20);
             
-            PdfFont font1 = PdfFontFactory.createFont(FontConstants.COURIER);
+            PdfFont font1 = PdfFontFactory.createFont(StandardFonts.TIMES_ITALIC);
 //            PdfFont font2 = PdfFontFactory.createFont(FontConstants.TIMES_ITALIC);
             
             Paragraph parrafo1 = new Paragraph(nombreArc).setFont(font1);

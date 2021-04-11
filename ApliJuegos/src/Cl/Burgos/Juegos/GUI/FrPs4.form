@@ -542,6 +542,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="NO"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jrbUpNoMouseClicked"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JRadioButton" name="jrbUpSi">
           <Properties>

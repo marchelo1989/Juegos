@@ -7,7 +7,7 @@ package Cl.Burgos.Juegos.DAO;
 
 import Cl.Burgos.Juegos.BD.BD;
 import Cl.Burgos.Juegos.ENT.ClPc;
-import com.itextpdf.io.font.FontConstants;
+import com.itextpdf.io.font.constants.StandardFonts;
 import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
@@ -258,7 +258,7 @@ public class DAOPc {
             //Arriba,Abajo,derecha,izqueda
             doc.setMargins(80, 20, 20, 20);
             
-            PdfFont font1 = PdfFontFactory.createFont(FontConstants.COURIER);
+            PdfFont font1 = PdfFontFactory.createFont(StandardFonts.COURIER);
 //            PdfFont font2 = PdfFontFactory.createFont(FontConstants.TIMES_ITALIC);
             
             Paragraph parrafo1 = new Paragraph(nombreArc).setFont(font1);

@@ -544,6 +544,11 @@ public class FrPs4 extends javax.swing.JFrame {
         buttonGroupUpdate.add(jrbUpNo);
         jrbUpNo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jrbUpNo.setText("NO");
+        jrbUpNo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jrbUpNoMouseClicked(evt);
+            }
+        });
 
         buttonGroupUpdate.add(jrbUpSi);
         jrbUpSi.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -865,6 +870,11 @@ public class FrPs4 extends javax.swing.JFrame {
         clPs3 = new ClPs4(txtCodigo.getText().trim(), txtNombre.getText().trim());
         defineTablaPs3Buscar(clPs3);
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jrbUpNoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jrbUpNoMouseClicked
+        // TODO add your handling code here:
+        txtPatch.setText("1.00");
+    }//GEN-LAST:event_jrbUpNoMouseClicked
 
     public String siyno(boolean b){
         String rep="";

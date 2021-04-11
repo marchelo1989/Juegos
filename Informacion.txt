@@ -12,3 +12,4 @@
 	v1.8.3 Integracion de los datos se agrego datos al Excel para Trabajar la BD
 	v1.9 Implementado PS4 Interfaz de PS4 Completa
 	v1.10 Implementación de versiones de update a la interfaz de PS4
+	v1.11 Cambios en la fuente de los PDF y arreglo menor al boton de actualizar en PS4
