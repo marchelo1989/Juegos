@@ -18,7 +18,7 @@ public interface Confi {
     //Configuraciones para Update
     static String nameArchivo = "ApliJuegos.zip";
     static String CarpetaUpdate = "Update/";
-    static String Version = "1.11";
+    static String Version = "1.12";
     static String UrlVersion = "https://raw.githubusercontent.com/marchelo1989/Juegos/main/version.txt";
     static String UrlDescarga = "https://raw.githubusercontent.com/marchelo1989/Juegos/main/Descarga.txt";
 }

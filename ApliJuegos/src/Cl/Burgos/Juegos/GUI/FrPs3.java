@@ -10,13 +10,19 @@ import Cl.Burgos.Juegos.ENT.ClPs3;
 import Cl.Burgos.Juegos.FUN.Archivos;
 import Cl.Burgos.Juegos.FUN.Log;
 import Cl.Burgos.Juegos.FUN.Render;
+import Cl.Burgos.Juegos.Main.ApliJuegos;
+import java.awt.Desktop;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.List;
 import java.util.StringTokenizer;
 import javax.imageio.ImageIO;
@@ -62,6 +68,8 @@ public class FrPs3 extends javax.swing.JFrame {
         fondo.setIcon(MyImgCustom);
         getLayeredPane().add(fondo, JLayeredPane.FRAME_CONTENT_LAYER);
         fondo.setBounds(0, 0, MyImgCustom.getIconWidth(), MyImgCustom.getIconHeight());
+        
+        jMenuItem1.setVisible(ApliJuegos.Update); 
     }
 
     public void Limpiar() {
@@ -349,6 +357,13 @@ public class FrPs3 extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jrbDlcSi = new javax.swing.JRadioButton();
         jrbDlcNo = new javax.swing.JRadioButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenu2 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -382,7 +397,7 @@ public class FrPs3 extends javax.swing.JFrame {
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 359, Short.MAX_VALUE)
         );
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos"));
@@ -655,6 +670,51 @@ public class FrPs3 extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        jMenu1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jMenu1.setText("Inicio");
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jMenu2.setText("Ayuda");
+
+        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.ALT_MASK));
+        jMenuItem1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Cl/Burgos/Juegos/IMG/Update.png"))); // NOI18N
+        jMenuItem1.setText("Actualizacion");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem1);
+
+        jMenu3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Cl/Burgos/Juegos/IMG/Ayuda.png"))); // NOI18N
+        jMenu3.setText("Contacto");
+
+        jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Cl/Burgos/Juegos/IMG/WEB.png"))); // NOI18N
+        jMenuItem3.setText("Pagina Web");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem3);
+
+        jMenuItem4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Cl/Burgos/Juegos/IMG/WhatsApp.png"))); // NOI18N
+        jMenuItem4.setText("Whatsapp");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem4);
+
+        jMenu2.add(jMenu3);
+
+        jMenuBar1.add(jMenu2);
+
+        setJMenuBar(jMenuBar1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -845,6 +905,52 @@ public class FrPs3 extends javax.swing.JFrame {
         defineTablaPs3Buscar(clPs3);
     }//GEN-LAST:event_jButton4ActionPerformed
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        new FrUpdate().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        // TODO add your handling code here:
+        URL url=null;
+        try {
+            url = new URL("https://marchelo1989.github.io/");
+            try {
+                Desktop.getDesktop().browse(url.toURI());
+            } catch (IOException e) {
+                Log.log("Error en Clase FrContacto: "+e.getMessage());
+                e.printStackTrace();
+            } catch (URISyntaxException e) {
+                Log.log("Error en Clase FrContacto: "+e.getMessage());
+                e.printStackTrace();
+            }
+        } catch (MalformedURLException e1) {
+            Log.log("Error en Clase FrContacto: "+e1.getMessage());
+            e1.printStackTrace();
+        }
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        // TODO add your handling code here:
+        URL url=null;
+        try {
+            url = new URL("https://api.whatsapp.com/send?phone=+56920473627");
+            try {
+                Desktop.getDesktop().browse(url.toURI());
+            } catch (IOException e) {
+                Log.log("Error en Clase FrContacto: "+e.getMessage());
+                e.printStackTrace();
+            } catch (URISyntaxException e) {
+                Log.log("Error en Clase FrContacto: "+e.getMessage());
+                e.printStackTrace();
+            }
+        } catch (MalformedURLException e1) {
+            Log.log("Error en Clase FrContacto: "+e1.getMessage());
+            e1.printStackTrace();
+        }
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
     public String siyno(boolean b){
         String rep="";
         if(b==true){ rep="Si";}
@@ -947,6 +1053,13 @@ public class FrPs3 extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
